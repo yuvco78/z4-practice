@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מתרגלים למבחן ז-4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700&display=swap">
+<style>
+/* Layout: עמוד מחברת משבצות – כרטיס שאלה אחד במרכז, צר ונוח לטלפון */
+:root {
+  --paper: #f7f9fc;
+  --grid: #dfe6f1;
+  --card: #ffffff;
+  --ink: #1d2a44;
+  --muted: #5b6b86;
+  --pen: #2457c5;          /* עט כחול */
+  --pen-soft: #e6edfb;
+  --marker: #ffd84d;       /* מרקר צהוב */
+  --ok: #1f8a4c; --ok-bg: #e5f5ec;
+  --bad: #c53030; --bad-bg: #fdecec;
+  --scratch: #4c97ff;      /* צבע בלוקי תנועה בסקראץ' */
+  --line: #cfd8e6;
+  --font-display: "Secular One", "Assistant", Arial, sans-serif;
+  --font-body: "Assistant", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #121826; --grid: #1c2436; --card: #1a2233; --ink: #e8edf7; --muted: #9aa8c2;
+  --pen: #7fa6ff; --pen-soft: #22304d; --marker: #e0b92e; --ok: #4cc782; --ok-bg: #163325;
+  --bad: #ff7b7b; --bad-bg: #3a1c20; --scratch: #5b9fff; --line: #2c3750; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #121826; --grid: #1c2436; --card: #1a2233; --ink: #e8edf7; --muted: #9aa8c2;
+  --pen: #7fa6ff; --pen-soft: #22304d; --marker: #e0b92e; --ok: #4cc782; --ok-bg: #163325;
+  --bad: #ff7b7b; --bad-bg: #3a1c20; --scratch: #5b9fff; --line: #2c3750; color-scheme: dark }
+
+* { box-sizing: border-box }
+body {
+  background: var(--paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55;
+  direction: rtl; min-height: 100vh;
+}
+.wrap { max-width: 680px; margin: 0 auto; padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2 { font-family: var(--font-display); font-weight: 400; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); line-height: 1.2 }
+h1 mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: inherit; padding: 0 .1em }
+.sub { color: var(--muted); margin: 6px 0 22px }
+button { font: inherit; cursor: pointer }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--pen); outline-offset: 2px }
+
+/* בית: רשימת מבחנים */
+.exams { display: grid; gap: 14px }
+.exam { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px;
+  display: grid; gap: 8px; text-align: right; color: inherit; width: 100% }
+.exam:hover { border-color: var(--pen) }
+.exam .top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap }
+.exam h2 { font-size: 1.35rem }
+.date { font-weight: 700; color: var(--pen); white-space: nowrap; font-variant-numeric: tabular-nums }
+.exam p { margin: 0; color: var(--muted); font-size: .95rem }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; font-size: .85rem }
+.chip { background: var(--pen-soft); color: var(--pen); border-radius: 999px; padding: 2px 10px; font-weight: 600 }
+.empty { background: var(--card); border: 1px dashed var(--line); border-radius: 14px; padding: 22px; color: var(--muted) }
+
+/* תרגול */
+.bar { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap }
+.back { background: none; border: 0; color: var(--pen); font-weight: 700; padding: 4px 0 }
+.progress { flex: 1; min-width: 140px; height: 8px; background: var(--line); border-radius: 99px; overflow: hidden }
+.progress i { display: block; height: 100%; background: var(--pen); width: 0; transition: width .25s }
+.count { color: var(--muted); font-variant-numeric: tabular-nums; font-size: .9rem }
+.score { font-weight: 700; color: var(--ok); font-variant-numeric: tabular-nums; font-size: .9rem }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: grid; gap: 16px }
+.qhead { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+.hard { background: var(--marker); color: #3b2f00; border-radius: 6px; padding: 1px 8px; font-size: .8rem; font-weight: 700 }
+.qtext { font-size: 1.15rem; font-weight: 600; margin: 0 }
+.blocks { display: grid; gap: 6px; justify-items: start; padding: 10px; border-radius: 10px; background: var(--pen-soft) }
+.blk { background: var(--scratch); color: #fff; border-radius: 8px; padding: 6px 14px; font-weight: 700; font-size: .95rem;
+  box-shadow: 0 2px 0 rgba(0,0,0,.18); unicode-bidi: plaintext }
+.opts { display: grid; gap: 10px }
+.opt { text-align: right; background: var(--card); color: var(--ink); border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px; unicode-bidi: plaintext }
+.opt:hover:not(:disabled) { border-color: var(--pen) }
+.opt:disabled { cursor: default }
+.opt.right { border-color: var(--ok); background: var(--ok-bg) }
+.opt.wrong { border-color: var(--bad); background: var(--bad-bg) }
+.numrow { display: flex; gap: 10px; flex-wrap: wrap; align-items: center }
+.numrow input { font: inherit; font-size: 1.2rem; width: 9em; max-width: 100%; padding: 10px 12px; border: 2px solid var(--line); border-radius: 10px;
+  background: var(--card); color: var(--ink); direction: ltr; text-align: center }
+.unit { color: var(--muted); font-weight: 600 }
+.btn { background: var(--pen); color: #fff; border: 0; border-radius: 10px; padding: 11px 20px; font-weight: 700 }
+.btn.ghost { background: var(--pen-soft); color: var(--pen) }
+.fb { border-radius: 12px; padding: 14px; display: grid; gap: 6px }
+.fb.ok { background: var(--ok-bg); border: 1px solid var(--ok) }
+.fb.no { background: var(--bad-bg); border: 1px solid var(--bad) }
+.fb strong { font-size: 1.1rem }
+.fb.ok strong { color: var(--ok) } .fb.no strong { color: var(--bad) }
+.fb p { margin: 0; unicode-bidi: plaintext }
+.actions { display: flex; gap: 10px; flex-wrap: wrap }
+.end { text-align: center; display: grid; gap: 14px; justify-items: center }
+.big { font-family: var(--font-display); font-size: 3rem; color: var(--pen); font-variant-numeric: tabular-nums; line-height: 1 }
+.foot { margin-top: 26px; color: var(--muted); font-size: .85rem }
+@media (prefers-reduced-motion: reduce) { .progress i { transition: none } }
+</style>
+
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+const EXAMS = [];
+const DAYS = ["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
+const app = document.getElementById("app");
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+// מספרים שליליים, זוגות סדורים ו-"x: -120" נשארים משמאל לימין גם בתוך טקסט בעברית
+function rich(s) {
+  const N = "‎?-?\\d+(?:\\.\\d+)?";
+  const re = new RegExp(`\\(\\s*${N}\\s*,\\s*${N}\\s*\\)|[xy]:\\s*${N}|‎?-\\d+(?:\\.\\d+)?`, "g");
+  return esc(s).replace(re, m => `<bdi dir="ltr">${m.replace(/‎/g, "")}</bdi>`);
+}
+function today() { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+function examDate(e) { const [y, m, d] = e.date.split("-").map(Number); return new Date(y, m - 1, d); }
+function nice(e) { const d = examDate(e); return `יום ${DAYS[d.getDay()]} ${d.getDate()}/${d.getMonth() + 1}`; }
+function daysLeft(e) { return Math.round((examDate(e) - today()) / 86400000); }
+// מבחן שעבר יורד מהרשימה
+const active = () => EXAMS.filter(e => daysLeft(e) >= 0).sort((a, b) => examDate(a) - examDate(b));
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function home() {
+  const list = active();
+  app.innerHTML = `
+    <h1>מתרגלים <mark>למבחן</mark></h1>
+    <p class="sub">כיתה ז-4 · בוחרים מבחן ופותרים כמה פעמים שרוצים. השאלות מבוססות על החומר שהמורים פרסמו.</p>
+    <div class="exams">${list.length ? list.map(e => {
+      const best = store.get("best-" + e.id); const left = daysLeft(e);
+      return `<button class="exam" data-id="${e.id}">
+        <div class="top"><h2>${esc(e.title)}</h2><span class="date">${nice(e)}</span></div>
+        <p>${esc(e.about)}</p>
+        <div class="meta"><span class="chip">${e.q.length} שאלות</span>
+          <span class="chip">${left === 0 ? "היום!" : left === 1 ? "מחר" : `עוד ${left} ימים`}</span>
+          ${best ? `<span class="chip">השיא שלך: ${best}%</span>` : ""}</div>
+        <p>${esc(e.source)}</p></button>`; }).join("")
+      : `<div class="empty">אין כרגע מבחנים קרובים. כשיתפרסמו מבחנים חדשים – הם יופיעו כאן.</div>`}</div>
+    <p class="foot">מבחן שהתאריך שלו עבר יורד מהרשימה אוטומטית. מצאתם טעות בשאלה? ספרו להורים 🙂</p>`;
+  app.querySelectorAll(".exam").forEach(b => b.onclick = () => { location.hash = b.dataset.id; });
+}
+
+let S = null; // מצב התרגול
+function start(exam, only) {
+  const pool = only ? exam.q.filter((q, i) => only.includes(i)) : exam.q;
+  S = { exam, order: shuffle(pool.map(q => exam.q.indexOf(q))), pos: 0, right: 0, wrongIdx: [], answered: false };
+  question();
+}
+
+function splitScript(text) {
+  // "הדמות ב-(x, y). התסריט: A ← B. מה ערך x בסוף?" -> חלקים
+  const m = text.match(/^(.*?)\s*התסריט:\s*(.+?)\.\s*(מה .*)$/);
+  if (!m) return null;
+  return { intro: m[1], blocks: m[2].split(" ← "), ask: m[3] };
+}
+
+function question() {
+  const e = S.exam, qi = S.order[S.pos], q = e.q[qi];
+  S.answered = false;
+  const sc = splitScript(q.q);
+  let body = sc
+    ? `<p class="qtext">${rich(sc.intro)}</p><div class="blocks" aria-label="התסריט">${sc.blocks.map(b => `<span class="blk">${rich(b)}</span>`).join("")}</div><p class="qtext">${rich(sc.ask)}</p>`
+    : `<p class="qtext">${rich(q.q)}</p>`;
+  let ans;
+  if (q.t === "mc") {
+    S.opts = shuffle(q.o.map((o, i) => i));
+    ans = `<div class="opts">${S.opts.map(i => `<button class="opt" data-i="${i}">${rich(q.o[i])}</button>`).join("")}</div>`;
+  } else {
+    ans = `<form class="numrow" id="numf"><input id="num" inputmode="decimal" autocomplete="off" placeholder="התשובה" aria-label="התשובה">
+      ${q.u ? `<span class="unit">${esc(q.u)}</span>` : ""}<button class="btn" type="submit">בדיקה</button></form>`;
+  }
+  app.innerHTML = `
+    <div class="bar"><button class="back" id="back">→ לכל המבחנים</button>
+      <div class="progress" aria-hidden="true"><i style="width:${S.pos / S.order.length * 100}%"></i></div>
+      <span class="count">${S.pos + 1} / ${S.order.length}</span><span class="score">✓ ${S.right}</span></div>
+    <div class="card">
+      <div class="qhead"><span class="chip">${esc(e.title)}</span>${q.h ? `<span class="hard">שאלת אתגר</span>` : ""}</div>
+      ${body}${ans}<div id="fb"></div></div>`;
+  document.getElementById("back").onclick = () => { location.hash = ""; };
+  if (q.t === "mc") app.querySelectorAll(".opt").forEach(b => b.onclick = () => answer(q, Number(b.dataset.i) === q.a, b));
+  else {
+    const inp = document.getElementById("num"); inp.focus({ preventScroll: true });
+    document.getElementById("numf").onsubmit = ev => {
+      ev.preventDefault(); if (S.answered) return;
+      const v = parseFloat(inp.value.replace(",", ".").replace(/[‎−–]/g, m => m === "‎" ? "" : "-"));
+      if (isNaN(v)) { inp.placeholder = "כתבו מספר"; inp.value = ""; return; }
+      answer(q, Math.abs(v - q.a) <= Math.max(q.tol || 0, 1e-9), null);
+    };
+  }
+}
+
+function fmtNum(x) { return Number.isInteger(x) ? String(x) : String(+x.toFixed(4)); }
+
+function answer(q, ok, btn) {
+  if (S.answered) return; S.answered = true;
+  if (ok) S.right++; else S.wrongIdx.push(S.order[S.pos]);
+  if (q.t === "mc") {
+    app.querySelectorAll(".opt").forEach(b => { b.disabled = true; if (Number(b.dataset.i) === q.a) b.classList.add("right"); });
+    if (!ok && btn) btn.classList.add("wrong");
+  } else {
+    const inp = document.getElementById("num"); inp.disabled = true;
+    inp.style.borderColor = ok ? "var(--ok)" : "var(--bad)";
+  }
+  const correct = q.t === "mc" ? q.o[q.a] : `${fmtNum(q.a)}${q.u ? " " + q.u : ""}`;
+  const last = S.pos === S.order.length - 1;
+  document.getElementById("fb").innerHTML = `
+    <div class="fb ${ok ? "ok" : "no"}" role="status">
+      <strong>${ok ? "✓ תשובה נכונה!" : "✗ תשובה לא נכונה"}</strong>
+      ${ok ? "" : `<p>התשובה הנכונה: <b>${rich(correct)}</b></p>`}
+      <p>${ok ? "" : "למה? "}${rich(q.e)}</p></div>
+    <div class="actions" style="margin-top:12px"><button class="btn" id="next">${last ? "לסיכום" : "לשאלה הבאה ←"}</button></div>`;
+  const nx = document.getElementById("next"); nx.focus({ preventScroll: true });
+  nx.onclick = () => { if (last) end(); else { S.pos++; question(); window.scrollTo({ top: 0 }); } };
+}
+
+function end() {
+  const e = S.exam, pct = Math.round(S.right / S.order.length * 100);
+  const best = store.get("best-" + e.id) || 0;
+  if (pct > best && S.order.length === e.q.length) store.set("best-" + e.id, pct);
+  const wrong = S.wrongIdx.slice();
+  app.innerHTML = `
+    <div class="bar"><button class="back" id="back">→ לכל המבחנים</button></div>
+    <div class="card end">
+      <h2>${esc(e.title)}</h2>
+      <div class="big">${pct}%</div>
+      <p>${S.right} תשובות נכונות מתוך ${S.order.length}</p>
+      <p class="sub" style="margin:0">${pct >= 90 ? "מצוין! אתם מוכנים למבחן 💪" : pct >= 70 ? "יפה מאוד! עוד סיבוב על הטעויות ואתם שם." : "כדאי לעבור שוב על החומר ולנסות שוב – זה בדיוק בשביל זה."}</p>
+      <div class="actions">${wrong.length ? `<button class="btn" id="redo">לתרגל רק את ${wrong.length} הטעויות</button>` : ""}
+        <button class="btn ghost" id="again">מההתחלה, בסדר חדש</button></div></div>`;
+  document.getElementById("back").onclick = () => { location.hash = ""; };
+  document.getElementById("again").onclick = () => start(e);
+  const r = document.getElementById("redo"); if (r) r.onclick = () => start(e, wrong);
+}
+
+function route() {
+  const id = location.hash.slice(1);
+  const e = active().find(x => x.id === id);
+  if (e) start(e); else home();
+  window.scrollTo({ top: 0 });
+}
+window.addEventListener("hashchange", route);
+app.innerHTML = '<p class="sub">טוען מבחנים…</p>';
+fetch("exams.json?v=" + Date.now(), { cache: "no-store" })
+  .then(r => r.json()).then(d => { EXAMS.push(...d); route(); })
+  .catch(() => { app.innerHTML = '<div class="empty">לא הצלחתי לטעון את המבחנים. נסו לרענן את הדף.</div>'; });
+</script>
+
+</body>
+</html>
