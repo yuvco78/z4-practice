@@ -118,7 +118,7 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
 // מספרים שליליים, זוגות סדורים ו-"x: -120" נשארים משמאל לימין גם בתוך טקסט בעברית
 function rich(s) {
   const N = "‎?-?\\d+(?:\\.\\d+)?";
-  const re = new RegExp(`\\(\\s*${N}\\s*,\\s*${N}\\s*\\)|[xy]:\\s*${N}|‎?-\\d+(?:\\.\\d+)?`, "g");
+  const re = new RegExp(`\\(*[A-C][A-C01'·+()=, ]*[A-C01')]|\\(\\s*${N}\\s*,\\s*${N}\\s*\\)|[xy]:\\s*${N}|‎?-\\d+(?:\\.\\d+)?`, "g");
   return esc(s).replace(re, m => `<bdi dir="ltr">${m.replace(/‎/g, "")}</bdi>`);
 }
 function today() { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
